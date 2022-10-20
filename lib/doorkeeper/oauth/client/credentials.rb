@@ -14,6 +14,9 @@ module Doorkeeper
           end
 
           def from_params(request)
+            request.params["client_id"] = request.headers["clientId"] if request.headers["clientId"].present?
+            request.params["client_id"] = request.headers["X-CLIENT-KEY"] if request.headers["X-CLIENT-KEY"].present?
+            request.params["grant_type"] = request.params["grantType"] if request.params["grantType"].present?
             request.parameters.values_at(:client_id, :client_secret)
           end
 
